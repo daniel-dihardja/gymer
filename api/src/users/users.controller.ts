@@ -1,4 +1,5 @@
 import { Controller, Post, Body, Get, Put, Delete,Param} from '@nestjs/common';
+import { CreateUserDTO } from "./dto/create-user.dto";
 import { UsersService } from './users.service';
 import { User } from './user.entity';
 
@@ -13,8 +14,8 @@ export class UsersController {
     }
 
     @Post()
-    create(@Body() user: User) {
-        // return this.service.createUser(user);
+    create(@Body() createUserDTO: CreateUserDTO): Promise<void> {
+        return this.service.createUser(createUserDTO);
     }
 
     @Put()
