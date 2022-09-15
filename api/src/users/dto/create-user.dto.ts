@@ -1,4 +1,3 @@
-import { User } from "../user.entity";
 import {IsString, IsNotEmpty, IsEmail} from 'class-validator';
 
 export class CreateUserDTO {

@@ -25,5 +25,8 @@ export class User {
     activationToken?: string
 
     @Column({default: 0})
+    recoveryCode?: number;
+
+    @Column({default: 0})
     isActive?: number;
 }

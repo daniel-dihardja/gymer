@@ -25,7 +25,7 @@ export class UsersService {
 
     async getUserByEmail(email: string): Promise<User> {
         return await this.usersRepository.findOne({
-            select: ["id", "firstName", "lastName", "email", "password", "role", "activationToken", "isActive"],
+            select: ["id", "firstName", "lastName", "email", "password", "role", "activationToken", "recoveryCode", "isActive"],
             where: [{"email": email}]
         });
     }
@@ -51,7 +51,7 @@ export class UsersService {
         await this.usersRepository.save(createUserDTO)
     }
 
-    private async hashPassword(password: string): Promise<string> {
+    public async hashPassword(password: string): Promise<string> {
         return new Promise(resolve => {
             bcrypt.hash(password, 10, function(err, hash) {
                 resolve(hash);
