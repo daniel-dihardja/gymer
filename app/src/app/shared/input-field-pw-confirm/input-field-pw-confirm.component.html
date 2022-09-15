@@ -1,0 +1,14 @@
+<ion-item lines="full" [formGroup]="parent" [ngClass]="{'ion-invalid': hasPwErrors()}">
+  <ion-label position="floating">{{labelPwd}}</ion-label>
+  <ion-input type="text" [formControlName]="namePwd" ngDefaultControl></ion-input>
+  <ion-note slot="error">{{labelPwd}} is required</ion-note>
+</ion-item>
+
+<ion-item lines="full" [formGroup]="parent" [ngClass]="{'ion-invalid': hasPwConfirmErrors()}">
+  <ion-label position="floating">{{labelPwdConfirm}}</ion-label>
+  <ion-input type="text" [formControlName]="namePwdConfirm" ngDefaultControl></ion-input>
+  <ion-note slot="error">
+    <span *ngIf="isRequiredError()">Password confirmation is required</span>
+    <span *ngIf="isMissmatchError()">Passwords missmatch</span>
+  </ion-note>
+</ion-item>

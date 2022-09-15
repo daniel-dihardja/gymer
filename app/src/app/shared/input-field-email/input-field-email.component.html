@@ -1,0 +1,6 @@
+<ion-item lines="full" [formGroup]="parent" [ngClass]="{'ion-invalid': isInvalid()}">
+  <ion-label position="floating">{{label}}</ion-label>
+  <ion-input type="text" [formControlName]="name" ngDefaultControl></ion-input>
+  <ion-note slot="error" *ngIf="hasRequiredError()">{{label}} is required</ion-note>
+  <ion-note slot="error" *ngIf="hasEmailError()">Invalid email address</ion-note>
+</ion-item>

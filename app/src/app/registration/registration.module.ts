@@ -1,10 +1,13 @@
+import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
+import { SharedModule } from "../shared/shared.module";
 
 import { RegistrationPageRoutingModule } from './registration-routing.module';
+import { RegistrationService } from "./registration.service";
 
 import { RegistrationPage } from './registration.page';
 
@@ -13,8 +16,14 @@ import { RegistrationPage } from './registration.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    RegistrationPageRoutingModule
+    RegistrationPageRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    SharedModule,
   ],
-  declarations: [RegistrationPage]
+  declarations: [RegistrationPage],
+  providers: [
+    RegistrationService
+  ]
 })
 export class RegistrationPageModule {}

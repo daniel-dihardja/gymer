@@ -8,28 +8,36 @@
 </ion-header>
 
 <ion-content>
-  <form>
-    <ion-item lines="full">
-      <ion-label position="floating">First name</ion-label>
-      <ion-input type="text" required></ion-input>
-    </ion-item>
+  <form [formGroup]="form" (submit)="onSubmit()">
 
-    <ion-item lines="full">
-      <ion-label position="floating">Last name</ion-label>
-      <ion-input type="text" required></ion-input>
-    </ion-item>
+    <app-input-field
+      name="firstName"
+      label="First Name"
+      [parent]="form">
+    </app-input-field>
 
-    <ion-item lines="full">
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="text" required></ion-input>
-    </ion-item>
+    <app-input-field
+      name="lastName"
+      label="Last Name"
+      [parent]="form">
+    </app-input-field>
 
-    <ion-item lines="full">
-      <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" required></ion-input>
-    </ion-item>
 
-    <ion-row>
+    <app-input-field-email
+      name="email"
+      label="E-Mail"
+      [parent]="form"
+    ></app-input-field-email>
+
+    <app-input-field-pw-confirm
+      [parent]="form"
+      namePwd="password"
+      labelPwd="Password"
+      namePwdConfirm="passwordConfirm"
+      labelPwdConfirm="Confirm password"
+    ></app-input-field-pw-confirm>
+
+    <ion-row class="ion-margin-top">
       <ion-col>
         <ion-button type="submit" color="danger" expand="block" size="large">Sign Up</ion-button>
       </ion-col>
