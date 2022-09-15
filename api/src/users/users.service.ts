@@ -1,6 +1,7 @@
 import { Injectable, Inject, HttpException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { AuthService } from "../auth/auth.service";
 import { CreateUserDTO } from "./dto/create-user.dto";
 import { SimpleUserDTO } from "./dto/simple-user.dto";
 import { User } from './user.entity';
@@ -24,12 +25,12 @@ export class UsersService {
 
     async getUserByEmail(email: string): Promise<User> {
         return await this.usersRepository.findOne({
-            select: ["id", "email", "password"],
+            select: ["id", "firstName", "lastName", "email", "password", "role", "activationToken", "isActive"],
             where: [{"email": email}]
         });
     }
 
-    async updateUser(user: User) {
+    async updateUser(user: User): Promise<void> {
         await this.usersRepository.save(user)
     }
 

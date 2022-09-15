@@ -13,11 +13,6 @@ export class UsersController {
         return this.service.getUser(params.id);
     }
 
-    @Post()
-    create(@Body() createUserDTO: CreateUserDTO): Promise<void> {
-        return this.service.createUser(createUserDTO);
-    }
-
     @Put()
     update(@Body() user: User) {
         return this.service.updateUser(user);
