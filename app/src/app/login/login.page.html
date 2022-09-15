@@ -7,15 +7,17 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <form>
-    <ion-item lines="full">
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="text" required></ion-input>
-    </ion-item>
-    <ion-item lines="full">
-      <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" required></ion-input>
-    </ion-item>
+  <form [formGroup]="form" (submit)="onSubmit()">
+    <app-input-field-email
+      name="email"
+      label="E-Mail"
+      [parent]="form"
+    ></app-input-field-email>
+    <app-input-field-email
+      name="password"
+      label="Password"
+      [parent]="form"
+    ></app-input-field-email>
     <ion-row>
       <ion-col>
         <ion-button type="submit" color="danger" expand="block" size="large">Sign In</ion-button>
