@@ -28,7 +28,7 @@ export class AuthService {
         };
     }
 
-    async createActivationToken(user: User) {
+    async getActivationToken(user: User) {
         const payload = {username: user.email}
         return this.jwtService.sign(payload);
     }

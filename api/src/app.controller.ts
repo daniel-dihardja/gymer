@@ -10,12 +10,15 @@ import {
   UnauthorizedException,
   UseGuards
 } from '@nestjs/common';
+import { IsNotEmpty } from "class-validator";
+import { Router } from "express";
 import { LocalAuthGuard } from "./auth/local-auth.guard";
 import { AuthService } from "./auth/auth.service";
 import { CreateUserDTO } from "./users/dto/create-user.dto";
 import { NewPasswordDTO } from "./users/dto/new-password.dto";
 import { RecoveryDTO } from "./users/dto/recovery.dto";
 import { UsersService } from "./users/users.service";
+import { hash } from 'bcrypt';
 
 @Controller()
 export class AppController {
@@ -24,12 +27,9 @@ export class AppController {
 
   @Post('users')
   async registerUser(@Body() createUserDTO: CreateUserDTO): Promise<void> {
-    const token = await this.authService.createActivationToken(createUserDTO)
+    const token = await this.authService.getActivationToken(createUserDTO)
     const user = {... createUserDTO, activationToken: token};
     await this.userService.createUser(user);
-
-    // TODO:
-    // send email with activation token
   }
 
   @Get('users/activate')
@@ -44,6 +44,7 @@ export class AppController {
       throw new NotFoundException();
     }
     user.isActive = 1;
+    user.activationToken = "";
     return this.userService.updateUser(user);
   }
 
@@ -64,9 +65,6 @@ export class AppController {
     }
     user.recoveryCode = Math.round(Math.random()*999999);
     await this.userService.updateUser(user);
-
-    // TODO:
-    // send email to user with recovery code
   }
 
   @Post('password')
