@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { AlertController } from "@ionic/angular";
+import { AlertController, MenuController } from "@ionic/angular";
 import { LoginService } from "./login.service";
 
 @Component({
@@ -14,10 +14,12 @@ export class LoginPage implements OnInit {
 
   constructor(private fb: FormBuilder,
               private service: LoginService,
-              private alertController: AlertController) { }
+              private alertController: AlertController,
+              private menuController: MenuController) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.form = this.setupForm();
+    await this.menuController.enable(false);
   }
 
   private setupForm(): FormGroup {
