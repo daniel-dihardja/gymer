@@ -12,22 +12,17 @@ export class UsersService {
 
     constructor(@InjectRepository(User) private usersRepository: Repository<User>) { }
 
-    async getUsers(user: User): Promise<User[]> {
-        return await this.usersRepository.find();
-    }
-
-    async getUser(_id: number): Promise<User[]> {
-        return await this.usersRepository.find({
-            select: ["email", "isActive"],
-            where: [{ "id": _id }]
-        });
-    }
-
     async getUserByEmail(email: string): Promise<User> {
         return await this.usersRepository.findOne({
-            select: ["id", "firstName", "lastName", "email", "password", "role", "activationToken", "recoveryCode", "isActive"],
             where: [{"email": email}]
         });
+    }
+
+    async getUserWithCredits(email: string): Promise<User> {
+        return await this.usersRepository.findOne({
+            where: [{'email': email}],
+            relations: ['credits']
+        })
     }
 
     async updateUser(user: User): Promise<void> {

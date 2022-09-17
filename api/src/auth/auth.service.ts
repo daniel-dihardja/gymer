@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { CreateUserDTO } from "../users/dto/create-user.dto";
 import { User } from "../users/user.entity";
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
@@ -28,7 +29,7 @@ export class AuthService {
         };
     }
 
-    async createActivationToken(user: User): Promise<string> {
+    async createActivationToken(user: CreateUserDTO): Promise<string> {
         const payload = {username: user.email}
         return this.jwtService.sign(payload);
     }
