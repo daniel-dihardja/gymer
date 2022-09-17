@@ -9,10 +9,10 @@
     <ion-content>
       <ion-list>
         <ion-menu-toggle>
-          <ion-item>Dashboard</ion-item>
+          <ion-item [routerLink]="'/dashboard'" routerLinkActive="selected">Dashboard</ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
-          <ion-item>Credits</ion-item>
+          <ion-item [routerLink]="'/credits'" routerLinkActive="selected">Credits</ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
           <ion-item>Logout</ion-item>

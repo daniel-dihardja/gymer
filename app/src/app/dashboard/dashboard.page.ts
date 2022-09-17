@@ -9,7 +9,7 @@ export class DashboardPage implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  async ngOnInit() {
 
+  }
 }
