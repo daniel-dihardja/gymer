@@ -27,7 +27,7 @@ export class AppController {
 
   @Post('users')
   async registerUser(@Body() createUserDTO: CreateUserDTO): Promise<void> {
-    const token = await this.authService.getActivationToken(createUserDTO)
+    const token = await this.authService.createActivationToken(createUserDTO)
     const user = {... createUserDTO, activationToken: token};
     await this.userService.createUser(user);
   }
