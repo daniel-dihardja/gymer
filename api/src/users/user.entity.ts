@@ -21,9 +21,6 @@ export class User {
     @Column({length: 45, default: 'user'})
     role?: string;
 
-    @Column({length: 256, default: ""})
-    activationToken?: string
-
     @Column({default: 0})
     recoveryCode?: number;
 
