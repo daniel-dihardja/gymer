@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Credit } from "./credit.entity";
+import { GetCreditsDTO } from "./dto/get-credits.dto";
 
 @Injectable()
 export class CreditsService {
@@ -11,4 +12,21 @@ export class CreditsService {
     async createCredit(createCreditDTO: Credit): Promise<Credit> {
         return this.creditRepository.save(createCreditDTO);
     }
+
+    async getUserCredits(userId: number): Promise<GetCreditsDTO> {
+        const queryBuilder = this.creditRepository.createQueryBuilder();
+        const credits = await queryBuilder
+            .select('credit')
+            .from(Credit, 'credit')
+            .where("credit.userId = :id", { id: userId })
+            .orderBy('credit.id', 'DESC')
+            .getOne()
+
+        if (credits) {
+            return { total: credits.total };
+        } else {
+            return { total: 0 };
+        }
+    }
+
 }

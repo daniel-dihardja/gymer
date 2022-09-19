@@ -1,8 +1,10 @@
-import { Body, Controller, Post, Request, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from "../auth/jwt-auth-guard";
 import { UsersService } from "../users/users.service";
+import { Credit } from "./credit.entity";
 import { CreditsService } from "./credits.service";
 import { CreateCreditDTO } from "./dto/create-credit.dto";
+import { GetCreditsDTO } from "./dto/get-credits.dto";
 
 @Controller('credits')
 export class CreditsController {
@@ -19,14 +21,8 @@ export class CreditsController {
             throw new UnauthorizedException();
         }
 
-        let total: number;
-        const userWithCredits = await this.userService.getUserWithCredits(email);
-        const { credits } = userWithCredits;
-        if (credits.length > 0) {
-            total = credits[credits.length - 1].total + createCreditDTO.amount;
-        } else {
-            total = createCreditDTO.amount;
-        }
+        const credits = await this.creditService.getUserCredits(user.id);
+        const total = credits.total + createCreditDTO.amount;
 
         // TODO:
         // To be defined
@@ -35,5 +31,16 @@ export class CreditsController {
 
         const payload = { ...createCreditDTO, total, ref, price, user };
         await this.creditService.createCredit(payload);
+    }
+
+
+    @UseGuards(JwtAuthGuard)
+    @Get()
+    async getCredits(@Request() req): Promise<GetCreditsDTO> {
+        const user = await this.userService.getUserByEmail(req.user.username);
+        if (! user) {
+            throw new UnauthorizedException();
+        }
+        return this.creditService.getUserCredits(user.id)
     }
 }
