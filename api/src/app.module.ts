@@ -18,7 +18,7 @@ import { UsersModule } from './users/users.module';
         database: 'test',
         entities: [User, Credit],
         synchronize: true,
-        dropSchema: true
+        dropSchema: false
     }),
         AuthModule,
         CreditsModule],

@@ -22,11 +22,7 @@ export class CreditsService {
             .orderBy('credit.id', 'DESC')
             .getOne()
 
-        if (credits) {
-            return { total: credits.total };
-        } else {
-            return { total: 0 };
-        }
+        const total = credits ? credits.total : 0;
+        return {total};
     }
-
 }
