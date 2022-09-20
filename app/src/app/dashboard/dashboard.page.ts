@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuController } from "@ionic/angular";
 
 @Component({
   selector: 'app-dashboard',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardPage implements OnInit {
 
-  constructor() { }
+  constructor(private menuCtrl: MenuController) { }
+
+  openMenu() {
+    this.menuCtrl.enable(true).then(e => this.menuCtrl.open())
+  }
 
   async ngOnInit() {
 

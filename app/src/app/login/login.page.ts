@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { AlertController, MenuController } from "@ionic/angular";
+import { Router } from "@angular/router";
+import { AlertController, MenuController, NavController } from "@ionic/angular";
 import { LoginService } from "./login.service";
 
 @Component({
@@ -15,7 +16,8 @@ export class LoginPage implements OnInit {
   constructor(private fb: FormBuilder,
               private service: LoginService,
               private alertController: AlertController,
-              private menuController: MenuController) { }
+              private menuController: MenuController,
+              private router: Router) { }
 
   async ngOnInit() {
     this.form = this.setupForm();
@@ -33,6 +35,7 @@ export class LoginPage implements OnInit {
     const { email, password } = this.form.value;
     try {
       await this.service.login(email, password)
+      await this.router.navigate(['/dashboard'])
     } catch(error) {
       await this.showErrorMessage(error);
     }

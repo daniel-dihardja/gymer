@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { loadScript } from "@paypal/paypal-js";
-import { environment } from "../../environments/environment";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { AlertController, MenuController } from "@ionic/angular";
+import { CreditsService, ICredits } from "./credits.service";
 
 @Component({
   selector: 'app-credits',
@@ -9,26 +10,79 @@ import { environment } from "../../environments/environment";
 })
 export class CreditsPage implements OnInit {
 
-  constructor() { }
+  creditsTotal: number;
+  form: FormGroup;
+  price: number;
+
+  constructor(private creditsService: CreditsService,
+              private menuCtrl: MenuController,
+              private fb: FormBuilder,
+              private alertController: AlertController) { }
 
   ngOnInit() {
-    console.log('init');
-    loadScript({ "client-id": environment.payPalClientId, 'buyer-country': 'DE', 'currency': 'EUR', 'locale': 'de_DE' })
-      .then((paypal) => {
-        // start to use the PayPal JS SDK script
-        console.log(paypal);
-        paypal.Buttons({
-          style: {
-            layout: 'vertical',
-            color:  'blue',
-            shape:  'rect',
-            label:  'buynow'
-          }
-        }).render('#paypal-button-container');
-      })
-      .catch((err) => {
-        console.error("failed to load the PayPal JS SDK script", err);
-      });
+    this.form = this.setupForm();
+    this.form.get('amount').valueChanges
+      .subscribe((e: number) => this.price = e * 1); // hardcoded price 1:1
   }
 
+  openMenu() {
+    this.menuCtrl.enable(true).then(e => this.menuCtrl.open())
+  }
+
+  setupForm(): FormGroup {
+    this.price = 10;
+    return this.fb.group({
+      amount: [10]
+    });
+  }
+
+  async onSubmit(): Promise<void> {
+    await this.confirm();
+  }
+
+  async ionViewDidEnter(): Promise<void> {
+    await this.updateCreditsValue();
+  }
+
+  async updateCreditsValue(): Promise<void> {
+    try {
+      const credits = await this.creditsService.getCredits();
+      this.creditsTotal = credits.total;
+    } catch(error) {
+      console.error(error);
+    }
+  }
+
+  async buyCredits(amount: number): Promise<void> {
+    try {
+      await this.creditsService.buyCredits(amount);
+    } catch(error) {
+      console.error(error);
+    }
+  }
+
+  async confirm(): Promise<void> {
+    const amount = this.form.get('amount').value;
+    const alert = await this.alertController.create({
+      header: `Buy ${amount} credits for ${this.price}€ ?`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Alert canceled');
+          },
+        },
+        {
+          text: 'OK',
+          role: 'confirm',
+          handler: async () => {
+            await this.buyCredits(amount);
+            await this.updateCreditsValue();
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
 }

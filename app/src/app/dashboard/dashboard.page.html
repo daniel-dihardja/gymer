@@ -1,11 +1,24 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button autoHide="false" (click)="openMenu()"></ion-menu-button>
     </ion-buttons>
     <ion-title>Dashboard</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <ion-card>
+    <img src="https://b.fitn.in/f/c/15788/15788_1629807297628.jpg">
+    <ion-card-header>
+      <ion-card-title>Training 2h</ion-card-title>
+    </ion-card-header>
 
+    <ion-card-content>
+      Keep close to Nature's heart... and break clear away, once in awhile,
+      <div class="ion-padding-vertical">
+        <strong>Price: 5 Credits</strong>
+      </div>
+      <ion-button expand="block">Take</ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
