@@ -7,6 +7,10 @@ import { Credit } from "./credits/credit.entity";
 import { CreditsModule } from './credits/credits.module';
 import { User } from "./users/user.entity";
 import { UsersModule } from './users/users.module';
+import { VendorProduct } from "./vendor-products/vendor-product.entity";
+import { VendorsModule } from './vendors/vendors.module';
+import { Vendor } from "./vendors/vendors.entity";
+import { VendorProductsModule } from './vendor-products/vendor-products.module';
 
 @Module({
     imports: [UsersModule, TypeOrmModule.forRoot({
@@ -16,12 +20,14 @@ import { UsersModule } from './users/users.module';
         username: 'user',
         password: 'user',
         database: 'test',
-        entities: [User, Credit],
+        entities: [User, Credit, Vendor, VendorProduct],
         synchronize: true,
         dropSchema: false
     }),
         AuthModule,
-        CreditsModule],
+        CreditsModule,
+        VendorsModule,
+        VendorProductsModule],
     controllers: [AppController],
     providers: [AppService],
     exports: [UsersModule]
