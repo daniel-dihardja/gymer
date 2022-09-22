@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
 import { environment } from "../../environments/environment";
-import { TokenService } from "../token-service.service";
+import { TokenService } from "../token.service";
 
 export interface ICredits {
   total: number;
@@ -28,7 +28,7 @@ export class CreditsService {
     return new Promise((resolve, reject) => {
       const payload = {amount};
       const headers = this.tokenService.getHeaders();
-      this.httpClient.post(`${environment.apiUrl}/credits`, payload, headers)
+      this.httpClient.post(`${environment.apiUrl}/credits`, payload, {headers})
         .subscribe(e => resolve(), err => reject(err));
     });
   }

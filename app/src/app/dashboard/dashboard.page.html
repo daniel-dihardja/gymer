@@ -7,16 +7,17 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-card>
+
+  <ion-card *ngFor="let p of products">
     <img src="https://b.fitn.in/f/c/15788/15788_1629807297628.jpg">
     <ion-card-header>
-      <ion-card-title>Training 2h</ion-card-title>
+      <ion-card-title>{{p.title}}</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
-      Keep close to Nature's heart... and break clear away, once in awhile,
+      {{p.description}}
       <div class="ion-padding-vertical">
-        <strong>Price: 5 Credits</strong>
+        <strong>Price: {{p.price}} Credits</strong>
       </div>
       <ion-button expand="block">Take</ion-button>
     </ion-card-content>
