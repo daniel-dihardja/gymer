@@ -9,5 +9,11 @@ export class VendorProduct {
     @Column({length: 45})
     title: string
 
+    @Column('text')
+    description: string
+
+    @Column()
+    price: number
+
     @ManyToOne(type => Vendor, vendor => vendor.products) vendor: Vendor
 }
