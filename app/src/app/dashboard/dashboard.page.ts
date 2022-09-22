@@ -12,13 +12,15 @@ export class DashboardPage implements OnInit {
   products: IProduct[];
 
   constructor(private menuCtrl: MenuController,
-              private service: DashboardService) { }
+              private service: DashboardService) {
+  }
 
   openMenu() {
     this.menuCtrl.enable(true).then(e => this.menuCtrl.open())
   }
 
-  async ngOnInit() {}
+  async ngOnInit() {
+  }
 
   async ionViewDidEnter(): Promise<void> {
     await this.getProducts();
@@ -28,7 +30,7 @@ export class DashboardPage implements OnInit {
     try {
       const res = await this.service.getProducts();
       this.products = res;
-    } catch(error) {
+    } catch (error) {
       console.error(error);
     }
   }

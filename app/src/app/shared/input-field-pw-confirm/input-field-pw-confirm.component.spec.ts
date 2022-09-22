@@ -9,7 +9,7 @@ describe('InputFieldPwConfirmComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ InputFieldPwConfirmComponent ],
+      declarations: [InputFieldPwConfirmComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

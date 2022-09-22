@@ -14,12 +14,13 @@ export interface IAccessToken {
 export class LoginService {
 
   constructor(private httpClient: HttpClient,
-              private tokenService: TokenService) {}
+              private tokenService: TokenService) {
+  }
 
   async login(username: string, password: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      const payload = {username, password};
-      this.httpClient.post( `${environment.apiUrl}/auth/login`, payload )
+      const payload = { username, password };
+      this.httpClient.post(`${environment.apiUrl}/auth/login`, payload)
         .subscribe((e: IAccessToken) => {
           this.tokenService.setToken(e.access_token)
           resolve()

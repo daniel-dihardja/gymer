@@ -9,7 +9,7 @@ describe('InputFieldComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ InputFieldComponent ],
+      declarations: [InputFieldComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

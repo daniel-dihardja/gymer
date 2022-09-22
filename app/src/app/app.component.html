@@ -1,26 +1,26 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
-  <ion-menu side="start" menuId="first" contentId="main-content" type="overlay">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Menu</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <ion-list>
-        <ion-menu-toggle>
-          <ion-item [routerLink]="'/dashboard'" routerLinkActive="selected">Dashboard</ion-item>
-        </ion-menu-toggle>
-        <ion-menu-toggle>
-          <ion-item [routerLink]="'/credits'" routerLinkActive="selected">Buy Credits</ion-item>
-        </ion-menu-toggle>
-        <ion-menu-toggle>
-          <ion-item [routerLink]="'/login'">Logout</ion-item>
-        </ion-menu-toggle>
-      </ion-list>
-    </ion-content>
-  </ion-menu>
+    <ion-menu side="start" menuId="first" contentId="main-content" type="overlay">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-menu-toggle>
+            <ion-item [routerLink]="'/dashboard'" routerLinkActive="selected">Dashboard</ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle>
+            <ion-item [routerLink]="'/credits'" routerLinkActive="selected">Buy Credits</ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle>
+            <ion-item [routerLink]="'/login'">Logout</ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
 
-  <ion-router-outlet id="main-content"></ion-router-outlet>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
 </ion-app>

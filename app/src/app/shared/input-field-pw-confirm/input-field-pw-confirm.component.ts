@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from "@angular/forms";
 
 @Component({
@@ -14,7 +14,8 @@ export class InputFieldPwConfirmComponent {
   @Input() namePwdConfirm: string;
   @Input() labelPwdConfirm: string;
 
-  constructor() { }
+  constructor() {
+  }
 
   isRequiredError(): boolean {
     const ctrl = this.parent.get(this.namePwdConfirm);

@@ -1,15 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 import { SharedModule } from "../shared/shared.module";
 
 import { RegistrationPageRoutingModule } from './registration-routing.module';
-import { RegistrationService } from "./registration.service";
 
 import { RegistrationPage } from './registration.page';
+import { RegistrationService } from "./registration.service";
 
 @NgModule({
   imports: [
@@ -26,4 +26,5 @@ import { RegistrationPage } from './registration.page';
     RegistrationService
   ]
 })
-export class RegistrationPageModule {}
+export class RegistrationPageModule {
+}

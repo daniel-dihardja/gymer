@@ -8,7 +8,8 @@ export class TokenService {
 
   private token: string
 
-  constructor() { }
+  constructor() {
+  }
 
   setToken(token: string): void {
     this.token = token;

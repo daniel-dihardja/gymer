@@ -16,7 +16,8 @@ export class RegistrationPage implements OnInit {
   constructor(private fb: FormBuilder,
               private service: RegistrationService,
               private alertController: AlertController,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit(): void {
     this.form = this.setupForm();
@@ -39,7 +40,7 @@ export class RegistrationPage implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       passwordConfirm: ['', Validators.required]
-    },{validators: [this.pwConfirmValidator()]})
+    }, { validators: [this.pwConfirmValidator()] })
   }
 
   public pwConfirmValidator(): ValidatorFn {
@@ -47,7 +48,7 @@ export class RegistrationPage implements OnInit {
       const pw1 = formGroup.get('password').value;
       const pw2 = formGroup.get('passwordConfirm').value;
       if (pw1 != pw2) {
-        formGroup.get('passwordConfirm').setErrors({ pwMissmatch: true});
+        formGroup.get('passwordConfirm').setErrors({ pwMissmatch: true });
       }
       return null;
     };

@@ -9,7 +9,7 @@ describe('InputFieldEmailComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ InputFieldEmailComponent ],
+      declarations: [InputFieldEmailComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

@@ -14,19 +14,19 @@
       <h2>{{creditsTotal}}</h2>
     </ion-text>
     <form [formGroup]="form" (submit)="onSubmit()">
-    <ion-item>
-      <ion-input placeholder="Buy Credits" type="number" formControlName="amount"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-input placeholder="Buy Credits" type="number" formControlName="amount"></ion-input>
+      </ion-item>
       <ion-item>
         <ion-text class="ion-text-right">
           <span>Price {{price}} €</span>
         </ion-text>
       </ion-item>
-    <ion-row>
-      <ion-col>
-        <ion-button type="submit" color="danger" expand="block" size="large">Buy</ion-button>
-      </ion-col>
-    </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button type="submit" color="danger" expand="block" size="large">Buy</ion-button>
+        </ion-col>
+      </ion-row>
     </form>
   </ion-list>
 

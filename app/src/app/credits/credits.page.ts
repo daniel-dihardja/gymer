@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { AlertController, MenuController } from "@ionic/angular";
-import { CreditsService, ICredits } from "./credits.service";
+import { CreditsService } from "./credits.service";
 
 @Component({
   selector: 'app-credits',
@@ -17,7 +17,8 @@ export class CreditsPage implements OnInit {
   constructor(private creditsService: CreditsService,
               private menuCtrl: MenuController,
               private fb: FormBuilder,
-              private alertController: AlertController) { }
+              private alertController: AlertController) {
+  }
 
   ngOnInit() {
     this.form = this.setupForm();
@@ -48,7 +49,7 @@ export class CreditsPage implements OnInit {
     try {
       const credits = await this.creditsService.getCredits();
       this.creditsTotal = credits.total;
-    } catch(error) {
+    } catch (error) {
       console.error(error);
     }
   }
@@ -56,7 +57,7 @@ export class CreditsPage implements OnInit {
   async buyCredits(amount: number): Promise<void> {
     try {
       await this.creditsService.buyCredits(amount);
-    } catch(error) {
+    } catch (error) {
       console.error(error);
     }
   }

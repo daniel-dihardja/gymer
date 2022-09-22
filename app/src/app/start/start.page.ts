@@ -8,7 +8,8 @@ import { MenuController } from "@ionic/angular";
 })
 export class StartPage implements OnInit {
 
-  constructor(private menuController: MenuController) { }
+  constructor(private menuController: MenuController) {
+  }
 
   async ngOnInit() {
     await this.menuController.enable(false);
