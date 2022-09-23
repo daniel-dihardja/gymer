@@ -8,7 +8,8 @@ import { CreditsService } from './credits.service';
 @Module({
     providers: [CreditsService],
     controllers: [CreditsController],
-    imports: [TypeOrmModule.forFeature([Credit]), UsersModule]
+    imports: [TypeOrmModule.forFeature([Credit]), UsersModule],
+    exports: [CreditsService]
 })
 export class CreditsModule {
 }

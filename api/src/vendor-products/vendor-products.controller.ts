@@ -5,7 +5,8 @@ import { VendorProductsService } from "./vendor-products.service";
 
 @Controller('products')
 export class VendorProductsController {
-    constructor(private service: VendorProductsService) {}
+    constructor(private service: VendorProductsService) {
+    }
 
     @UseGuards(JwtAuthGuard)
     @Get()

@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Credit } from "../credits/credit.entity";
+import { UserProduct } from "../user-products/user-product.entity";
 
 @Entity('user')
 export class User {
@@ -32,6 +33,8 @@ export class User {
     isActive?: number;
 
     @OneToMany(type => Credit, credit => credit.user) credits: Credit[]
+
+    @OneToMany(type => UserProduct, up => up.user) products: UserProduct[]
 
     @CreateDateColumn()
     createdAt?: Date;

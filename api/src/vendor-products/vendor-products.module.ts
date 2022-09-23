@@ -5,8 +5,10 @@ import { VendorProductsController } from './vendor-products.controller';
 import { VendorProductsService } from './vendor-products.service';
 
 @Module({
-  controllers: [VendorProductsController],
-  providers: [VendorProductsService],
-  imports: [TypeOrmModule.forFeature([VendorProduct]),]
+    controllers: [VendorProductsController],
+    providers: [VendorProductsService],
+    imports: [TypeOrmModule.forFeature([VendorProduct])],
+    exports: [VendorProductsService]
 })
-export class VendorProductsModule {}
+export class VendorProductsModule {
+}

@@ -23,6 +23,6 @@ export class CreditsService {
             .getOne()
 
         const total = credits ? credits.total : 0;
-        return {total};
+        return { total };
     }
 }

@@ -1,7 +1,6 @@
 import { Body, Controller, Get, Post, Request, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from "../auth/jwt-auth-guard";
 import { UsersService } from "../users/users.service";
-import { Credit } from "./credit.entity";
 import { CreditsService } from "./credits.service";
 import { CreateCreditDTO } from "./dto/create-credit.dto";
 import { GetCreditsDTO } from "./dto/get-credits.dto";
@@ -33,12 +32,11 @@ export class CreditsController {
         await this.creditService.createCredit(payload);
     }
 
-
     @UseGuards(JwtAuthGuard)
     @Get()
     async getCredits(@Request() req): Promise<GetCreditsDTO> {
         const user = await this.userService.getUserByEmail(req.user.username);
-        if (! user) {
+        if (!user) {
             throw new UnauthorizedException();
         }
         return this.creditService.getUserCredits(user.id)
