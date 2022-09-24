@@ -31,7 +31,7 @@ export class DashboardService {
     return new Promise((resolve, reject) => {
       const headers = this.tokenService.getHeaders();
       const payload = { productId };
-      this.httpClient.post(`${environment.apiUrl}/uproducts`, payload, { headers })
+      this.httpClient.post(`${environment.apiUrl}/tickets`, payload, { headers })
         .subscribe(e => resolve(), error => reject(error))
     })
   }
