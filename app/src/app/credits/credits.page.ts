@@ -20,14 +20,14 @@ export class CreditsPage implements OnInit {
               private alertController: AlertController) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.form = this.setupForm();
     this.form.get('amount').valueChanges
-      .subscribe((e: number) => this.price = e * 1); // hardcoded price 1:1
+      .subscribe((e: number) => this.price); // hardcoded price 1:1
   }
 
-  openMenu() {
-    this.menuCtrl.enable(true).then(e => this.menuCtrl.open())
+  async openMenu() {
+    await this.menuCtrl.open()
   }
 
   setupForm(): FormGroup {
@@ -42,6 +42,7 @@ export class CreditsPage implements OnInit {
   }
 
   async ionViewDidEnter(): Promise<void> {
+    await this.menuCtrl.enable(true, 'first');
     await this.updateCreditsValue();
   }
 

@@ -22,11 +22,12 @@ export class TicketsPage {
               private service: TicketsService) {
   }
 
-  openMenu() {
-    this.menuCtrl.enable(true).then(e => this.menuCtrl.open())
+  async openMenu(): Promise<void> {
+    await this.menuCtrl.open()
   }
 
   async ionViewDidEnter(): Promise<void> {
+    await this.menuCtrl.enable(true, 'first')
     await this.getTickets();
   }
 

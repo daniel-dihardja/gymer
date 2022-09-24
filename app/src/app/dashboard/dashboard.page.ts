@@ -7,7 +7,7 @@ import { DashboardService, IProduct } from "./dashboard.service";
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
 })
-export class DashboardPage implements OnInit {
+export class DashboardPage {
 
   products: IProduct[];
 
@@ -17,24 +17,23 @@ export class DashboardPage implements OnInit {
               private toastController: ToastController) {
   }
 
-  openMenu() {
-    this.menuCtrl.enable(true).then(e => this.menuCtrl.open())
-  }
-
-  async ngOnInit() {
+  async openMenu() {
+    await this.menuCtrl.open()
   }
 
   async presentToast(message: string, position: 'top' | 'middle' | 'bottom') {
     const toast = await this.toastController.create({
       message: message,
       duration: 2000,
-      position: position
+      position: position,
+      color: "success"
     });
 
     await toast.present();
   }
 
   async ionViewDidEnter(): Promise<void> {
+    await this.menuCtrl.enable(true, 'first')
     await this.getProducts();
   }
 
