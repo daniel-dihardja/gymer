@@ -1,6 +1,6 @@
 import {
     Body,
-    Controller,
+    Controller, Get,
     NotAcceptableException, NotFoundException,
     Post,
     Request,
@@ -13,6 +13,7 @@ import { CreditsService } from "../credits/credits.service";
 import { UsersService } from "../users/users.service";
 import { VendorProductsService } from "../vendor-products/vendor-products.service";
 import { CreateUserProductDTO } from "./dto/create-user-product.dto";
+import { UserProduct } from "./user-product.entity";
 import { UserProductsService } from "./user-products.service";
 
 @Controller('uproducts')
@@ -66,5 +67,12 @@ export class UserProductsController {
         }
 
         await this.creditsService.createCredit(credit);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Get()
+    async getUserProducts(@Request() req): Promise<UserProduct[]> {
+        const user = req.user;
+        return this.upService.getUserProducts(user.id);
     }
 }
