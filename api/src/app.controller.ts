@@ -10,7 +10,11 @@ import {
     UseGuards
 } from '@nestjs/common';
 import { AuthService } from "./auth/auth.service";
+import { JwtAuthGuard } from "./auth/jwt-auth-guard";
 import { LocalAuthGuard } from "./auth/local-auth.guard";
+import { Roles } from "./auth/role.decorator";
+import { Role } from "./auth/role.enum";
+import { RolesGuard } from "./auth/role.guard";
 import { CreateUserDTO } from "./users/dto/create-user.dto";
 import { NewPasswordDTO } from "./users/dto/new-password.dto";
 import { RecoveryDTO } from "./users/dto/recovery.dto";
@@ -78,4 +82,9 @@ export class AppController {
         user.recoveryCode = 0;
         await this.userService.updateUser(user);
     }
+
+    @Get('ping')
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(Role.Vendor, Role.User)
+    async pingVendor(@Request() req): Promise<void> {}
 }
