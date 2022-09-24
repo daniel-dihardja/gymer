@@ -32,9 +32,9 @@ export class User {
     @Column({ default: 0 })
     isActive?: number;
 
-    @OneToMany(type => Credit, credit => credit.user) credits: Credit[]
+    @OneToMany(type => Credit, credit => credit.user) credits?: Credit[]
 
-    @OneToMany(type => Ticket, ticket => ticket.user) tickets: Ticket[]
+    @OneToMany(type => Ticket, ticket => ticket.user) tickets?: Ticket[]
 
     @CreateDateColumn()
     createdAt?: Date;

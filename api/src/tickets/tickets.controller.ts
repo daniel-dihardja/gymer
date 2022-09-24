@@ -11,6 +11,7 @@ import {
 import { JwtAuthGuard } from "../auth/jwt-auth-guard";
 import { Credit } from "../credits/credit.entity";
 import { CreditsService } from "../credits/credits.service";
+import { UsersService } from "../users/users.service";
 import { VendorProductsService } from "../vendor-products/vendor-products.service";
 import { CreateTicketDTO } from "./dto/create-ticket.dto";
 import { Ticket } from "./ticket.entity";
@@ -20,7 +21,8 @@ import { TicketsService } from "./tickets.service";
 export class TicketsController {
     constructor(private creditsService: CreditsService,
                 private productService: VendorProductsService,
-                private ticketService: TicketsService) {
+                private ticketService: TicketsService,
+                private userService: UsersService) {
     }
 
     @UseGuards(JwtAuthGuard)
