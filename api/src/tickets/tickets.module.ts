@@ -3,19 +3,19 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { CreditsModule } from "../credits/credits.module";
 import { UsersModule } from "../users/users.module";
 import { VendorProductsModule } from "../vendor-products/vendor-products.module";
-import { UserProduct } from "./user-product.entity";
-import { UserProductsController } from './user-products.controller';
-import { UserProductsService } from './user-products.service';
+import { Ticket } from "./ticket.entity";
+import { TicketsController } from './tickets.controller';
+import { TicketsService } from './tickets.service';
 
 @Module({
-    providers: [UserProductsService],
-    controllers: [UserProductsController],
+    providers: [TicketsService],
+    controllers: [TicketsController],
     imports: [
         CreditsModule,
         VendorProductsModule,
-        TypeOrmModule.forFeature([UserProduct]),
+        TypeOrmModule.forFeature([Ticket]),
         UsersModule
     ]
 })
-export class UserProductsModule {
+export class TicketsModule {
 }

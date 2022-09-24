@@ -1,45 +1,40 @@
 import {
     Body,
-    Controller, Get,
-    NotAcceptableException, NotFoundException,
+    Controller,
+    Get,
+    NotAcceptableException,
+    NotFoundException,
     Post,
     Request,
-    UnauthorizedException,
     UseGuards
 } from '@nestjs/common';
 import { JwtAuthGuard } from "../auth/jwt-auth-guard";
 import { Credit } from "../credits/credit.entity";
 import { CreditsService } from "../credits/credits.service";
-import { UsersService } from "../users/users.service";
 import { VendorProductsService } from "../vendor-products/vendor-products.service";
-import { CreateUserProductDTO } from "./dto/create-user-product.dto";
-import { UserProduct } from "./user-product.entity";
-import { UserProductsService } from "./user-products.service";
+import { CreateTicketDTO } from "./dto/create-ticket.dto";
+import { Ticket } from "./ticket.entity";
+import { TicketsService } from "./tickets.service";
 
-@Controller('uproducts')
-export class UserProductsController {
+@Controller('tickets')
+export class TicketsController {
     constructor(private creditsService: CreditsService,
                 private productService: VendorProductsService,
-                private upService: UserProductsService,
-                private userService: UsersService) {
+                private ticketService: TicketsService) {
     }
 
     @UseGuards(JwtAuthGuard)
     @Post()
-    async createUserProduct(@Body() createUserProductDTO: CreateUserProductDTO, @Request() req): Promise<void> {
-        const user = await this.userService.getUserByEmail(req.user.username);
-        if (!user) {
-            throw new UnauthorizedException();
-        }
-
+    async createTicket(@Body() createUserProductDTO: CreateTicketDTO, @Request() req): Promise<void> {
+        const user = req.user;
         const credits = await this.creditsService.getUserCredits(user.id);
-        if (! credits) {
+        if (!credits) {
             throw new NotAcceptableException();
         }
 
         const productId = createUserProductDTO.productId;
         const product = await this.productService.getProduct(productId);
-        if (! product) {
+        if (!product) {
             throw new NotFoundException();
         }
 
@@ -55,7 +50,7 @@ export class UserProductsController {
             price: product.price,
         }
 
-        await this.upService.createUserProduct(userProduct);
+        await this.ticketService.createTicket(userProduct);
 
         // 2. Substract user credits
         const credit: Credit = {
@@ -71,8 +66,8 @@ export class UserProductsController {
 
     @UseGuards(JwtAuthGuard)
     @Get()
-    async getUserProducts(@Request() req): Promise<UserProduct[]> {
+    async getTickets(@Request() req): Promise<Ticket[]> {
         const user = req.user;
-        return this.upService.getUserProducts(user.id);
+        return this.ticketService.getTickets(user.id);
     }
 }

@@ -5,8 +5,8 @@ import { AppService } from './app.service';
 import { AuthModule } from "./auth/auth.module";
 import { Credit } from "./credits/credit.entity";
 import { CreditsModule } from './credits/credits.module';
-import { UserProduct } from "./user-products/user-product.entity";
-import { UserProductsModule } from './user-products/user-products.module';
+import { Ticket } from "./tickets/ticket.entity";
+import { TicketsModule } from './tickets/tickets.module';
 import { User } from "./users/user.entity";
 import { UsersModule } from './users/users.module';
 import { VendorProduct } from "./vendor-products/vendor-product.entity";
@@ -22,7 +22,7 @@ import { VendorsModule } from './vendors/vendors.module';
         username: 'user',
         password: 'user',
         database: 'test',
-        entities: [User, Credit, Vendor, VendorProduct, UserProduct],
+        entities: [User, Credit, Vendor, VendorProduct, Ticket],
         synchronize: true,
         dropSchema: false,
     }),
@@ -30,7 +30,7 @@ import { VendorsModule } from './vendors/vendors.module';
         CreditsModule,
         VendorsModule,
         VendorProductsModule,
-        UserProductsModule,
+        TicketsModule,
         CreditsModule,
     ],
     controllers: [AppController],

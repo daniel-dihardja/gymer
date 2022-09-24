@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { UserProduct } from "../user-products/user-product.entity";
+import { Ticket } from "../tickets/ticket.entity";
 import { Vendor } from "../vendors/vendors.entity";
 
 @Entity('vendorProduct')
@@ -18,6 +18,6 @@ export class VendorProduct {
 
     @ManyToOne(type => Vendor, vendor => vendor.products) vendor: Vendor
 
-    @OneToMany(type => UserProduct, up => up.product) productUsers: UserProduct[]
+    @OneToMany(type => Ticket, ticket => ticket.product) tickets: Ticket[]
 
 }

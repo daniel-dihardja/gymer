@@ -2,8 +2,8 @@ import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } f
 import { User } from "../users/user.entity";
 import { VendorProduct } from "../vendor-products/vendor-product.entity";
 
-@Entity('userProduct')
-export class UserProduct {
+@Entity('ticket')
+export class Ticket {
     @PrimaryGeneratedColumn("uuid")
     id?: string;
 
@@ -19,7 +19,7 @@ export class UserProduct {
     @Column()
     price?: number;
 
-    @ManyToOne(type => User, user => user.products) user: User
+    @ManyToOne(type => User, user => user.tickets) user: User
 
-    @ManyToOne(type => VendorProduct, product => product.productUsers) product: VendorProduct
+    @ManyToOne(type => VendorProduct, product => product.tickets) product: VendorProduct
 }
