@@ -30,6 +30,10 @@ const routes: Routes = [
   {
     path: 'credits',
     loadChildren: () => import('./credits/credits.module').then(m => m.CreditsPageModule)
+  },
+  {
+    path: 'my-tickets',
+    loadChildren: () => import('./my-tickets/my-tickets.module').then(m => m.MyTicketsPageModule)
   }
 ];
 
