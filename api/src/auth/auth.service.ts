@@ -25,9 +25,13 @@ export class AuthService {
 
     async login(user: User) {
         const payload = { username: user.email, sub: user.id, role: user.role };
-        return {
+        const ret = {
             access_token: this.jwtService.sign(payload),
-        };
+        }
+        if (user.role !== 'user') {
+            ret['role'] = user.role;
+        }
+        return ret;
     }
 
     async createActivationToken(user: CreateUserDTO): Promise<string> {
