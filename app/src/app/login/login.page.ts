@@ -35,8 +35,16 @@ export class LoginPage implements OnInit {
   async onSubmit(): Promise<void> {
     const { email, password } = this.form.value;
     try {
-      await this.service.login(email, password)
-      await this.router.navigate(['/dashboard'])
+      const res = await this.service.login(email, password);
+      if (! res.role) {
+        await this.router.navigate(['/dashboard'])
+        return;
+      }
+      switch (res.role) {
+        case 'vendor':
+          await this.router.navigate(['/vendor'])
+          break;
+      }
     } catch (error) {
       await this.showErrorMessage(error);
     }

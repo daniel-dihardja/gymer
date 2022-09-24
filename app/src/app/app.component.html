@@ -12,11 +12,26 @@
             <ion-item [routerLink]="'/dashboard'" routerLinkActive="selected">Dashboard</ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle>
-            <ion-item [routerLink]="'/my-tickets'" routerLinkActive="selected">My Tickets</ion-item>
+            <ion-item [routerLink]="'/my-tickets'" routerLinkActive="selected">Tickets</ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle>
             <ion-item [routerLink]="'/credits'" routerLinkActive="selected">Buy Credits</ion-item>
           </ion-menu-toggle>
+          <ion-menu-toggle>
+            <ion-item [routerLink]="'/login'">Logout</ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+    <ion-menu side="start" menuId="vendor" contentId="main-content" type="overlay">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
           <ion-menu-toggle>
             <ion-item [routerLink]="'/login'">Logout</ion-item>
           </ion-menu-toggle>

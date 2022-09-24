@@ -32,8 +32,12 @@ const routes: Routes = [
     loadChildren: () => import('./credits/credits.module').then(m => m.CreditsPageModule)
   },
   {
-    path: 'my-tickets',
+    path: 'tickets',
     loadChildren: () => import('./tickets/tickets.module').then(m => m.TicketsPageModule)
+  },
+  {
+    path: 'vendor',
+    loadChildren: () => import('./vendor/vendor.module').then( m => m.VendorPageModule)
   }
 ];
 

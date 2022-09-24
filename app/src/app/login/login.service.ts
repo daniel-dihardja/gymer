@@ -4,8 +4,9 @@ import { environment } from "../../environments/environment";
 import { TokenService } from "../token.service";
 
 
-export interface IAccessToken {
+export interface IAuth {
   access_token: string;
+  role?: string;
 }
 
 @Injectable({
@@ -17,13 +18,13 @@ export class LoginService {
               private tokenService: TokenService) {
   }
 
-  async login(username: string, password: string): Promise<void> {
+  async login(username: string, password: string): Promise<IAuth> {
     return new Promise((resolve, reject) => {
       const payload = { username, password };
       this.httpClient.post(`${environment.apiUrl}/auth/login`, payload)
-        .subscribe((e: IAccessToken) => {
+        .subscribe((e: IAuth) => {
           this.tokenService.setToken(e.access_token)
-          resolve()
+          resolve(e)
         }, error => reject(error.error));
     })
   }
