@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MenuController } from "@ionic/angular";
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from "@techiediaries/ngx-qrcode";
 import { ITicket, TicketsService } from "./tickets.service";
@@ -39,14 +39,16 @@ export class TicketsPage {
     try {
       const res = await this.service.getTickets();
       this.tickets = res;
-    } catch(error) {
+    } catch (error) {
       console.error(error);
     }
   }
 
   showQRCode(ticket: ITicket): void {
     this.selectedTicket = ticket;
-    this.qrCodeValue = JSON.stringify({code: ticket.id});
+    this.qrCodeValue = JSON.stringify({
+      id: ticket.id
+    });
     this.setOpenModal(true);
   }
 }
