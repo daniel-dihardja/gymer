@@ -9,11 +9,15 @@ import {
     UseGuards
 } from '@nestjs/common';
 import { JwtAuthGuard } from "../auth/jwt-auth-guard";
+import { Roles } from "../auth/role.decorator";
+import { Role } from "../auth/role.enum";
+import { RolesGuard } from "../auth/role.guard";
 import { Credit } from "../credits/credit.entity";
 import { CreditsService } from "../credits/credits.service";
 import { UsersService } from "../users/users.service";
 import { VendorProductsService } from "../vendor-products/vendor-products.service";
 import { CreateTicketDTO } from "./dto/create-ticket.dto";
+import { ValidateTicketDTO } from "./dto/validate-ticket.dto";
 import { Ticket } from "./ticket.entity";
 import { TicketsService } from "./tickets.service";
 
@@ -25,8 +29,8 @@ export class TicketsController {
                 private userService: UsersService) {
     }
 
-    @UseGuards(JwtAuthGuard)
     @Post()
+    @UseGuards(JwtAuthGuard)
     async createTicket(@Body() createUserProductDTO: CreateTicketDTO, @Request() req): Promise<void> {
         const user = req.user;
         const credits = await this.creditsService.getUserCredits(user.id);
@@ -66,10 +70,23 @@ export class TicketsController {
         await this.creditsService.createCredit(credit);
     }
 
-    @UseGuards(JwtAuthGuard)
     @Get()
+    @UseGuards(JwtAuthGuard)
     async getTickets(@Request() req): Promise<Ticket[]> {
         const user = req.user;
         return this.ticketService.getTickets(user.id);
+    }
+
+    @Post('validate')
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(Role.Vendor)
+    async validate(@Body() validateTicketDTO: ValidateTicketDTO): Promise<void> {
+        const ticket = await this.ticketService.getTicket(validateTicketDTO.ticketId)
+        if (!ticket) {
+            throw new NotFoundException()
+        }
+        if (ticket.status !== 0) {
+            throw new NotAcceptableException()
+        }
     }
 }

@@ -14,7 +14,13 @@ export class TicketsService {
 
     async getTickets(userId: number): Promise<Ticket[]> {
         return this.ticketsRepository.find(
-            { relations: ['product'], where: { user: { id: userId } } },
+            { where: { user: { id: userId } }, relations: ['product'] },
+        )
+    }
+
+    async getTicket(id: string): Promise<Ticket> {
+        return this.ticketsRepository.findOne(
+            { where: { id: id } }
         )
     }
 }
