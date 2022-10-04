@@ -29,6 +29,10 @@ export class VendorPage {
     this.scannerEnabled = true;
   }
 
+  disableScanner(): void {
+    this.scannerEnabled = false;
+  }
+
   async onScanSuccess(qrCodeData: string): Promise<void> {
     this.scannerEnabled = false;
     const ticket = JSON.parse(qrCodeData);
@@ -38,31 +42,20 @@ export class VendorPage {
   async validateTicket(ticketId: string): Promise<void> {
     try {
       await this.service.validateTicket(ticketId);
+      await this.presentAlert('Success!')
     } catch (error) {
-      console.error(error);
+      console.error(error.error);
+      await this.presentAlert('Invalid')
     }
   }
 
-  async confirm(): Promise<void> {
+  async presentAlert(statusMessage: string) {
     const alert = await this.alertController.create({
-      header: `${this.scanResult}`,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Alert canceled');
-          },
-        },
-        {
-          text: 'OK',
-          role: 'confirm',
-          handler: async () => {
-            console.log('confirm ticket')
-          },
-        },
-      ],
+      header: 'Ticket Status',
+      message: statusMessage,
+      buttons: ['OK'],
     });
+
     await alert.present();
   }
 }
