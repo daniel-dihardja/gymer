@@ -16,4 +16,13 @@ export class VendorProductsService {
     async getProduct(productId: number): Promise<VendorProduct> {
         return this.productRepository.findOne({ where: [{ id: productId }] });
     }
+
+    async getProductWithVendor(productId: number): Promise<VendorProduct> {
+        return this.productRepository.findOne(
+            {
+                where: [{ id: productId }],
+                relations: ['vendor']
+            }
+        );
+    }
 }

@@ -1,6 +1,7 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Credit } from "../credits/credit.entity";
 import { Ticket } from "../tickets/ticket.entity";
+import { Vendor } from "../vendors/vendors.entity";
 
 @Entity('user')
 export class User {
@@ -35,6 +36,8 @@ export class User {
     @OneToMany(type => Credit, credit => credit.user) credits?: Credit[]
 
     @OneToMany(type => Ticket, ticket => ticket.user) tickets?: Ticket[]
+
+    @ManyToOne(type => Vendor, vendor => vendor.users) vendor: Vendor
 
     @CreateDateColumn()
     createdAt?: Date;

@@ -17,6 +17,13 @@ export class UsersService {
         });
     }
 
+    async getVendorUserByEmail(email: string): Promise<User> {
+        return await this.usersRepository.findOne({
+            where: [{ "email": email }],
+            relations: ['vendor']
+        });
+    }
+
     async updateUser(user: User): Promise<void> {
         await this.usersRepository.save(user)
     }

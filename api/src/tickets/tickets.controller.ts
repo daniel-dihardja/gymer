@@ -6,6 +6,7 @@ import {
     NotFoundException,
     Post,
     Request,
+    UnauthorizedException,
     UseGuards
 } from '@nestjs/common';
 import { JwtAuthGuard } from "../auth/jwt-auth-guard";
@@ -74,17 +75,32 @@ export class TicketsController {
     @UseGuards(JwtAuthGuard)
     async getTickets(@Request() req): Promise<Ticket[]> {
         const user = req.user;
-        return this.ticketService.getTickets(user.id);
+        return this.ticketService.getTicketsFromProduct(user.id);
     }
 
     @Post('validate')
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(Role.Vendor)
-    async validate(@Body() validateTicketDTO: ValidateTicketDTO): Promise<void> {
-        const ticket = await this.ticketService.getTicket(validateTicketDTO.ticketId)
+    async validate(@Body() validateTicketDTO: ValidateTicketDTO, @Request() req): Promise<void> {
+        const user = await this.userService.getVendorUserByEmail(req.user.username);
+        if (!user) {
+            throw new UnauthorizedException()
+        }
+
+        const ticket = await this.ticketService.getTicketWithProduct(validateTicketDTO.ticketId)
         if (!ticket) {
             throw new NotFoundException()
         }
+
+        const product = await this.productService.getProductWithVendor(ticket.product.id);
+        if (!product) {
+            throw new NotFoundException()
+        }
+
+        if (user.vendor.id !== product.vendor.id) {
+            throw new NotAcceptableException()
+        }
+
         if (ticket.status !== 0) {
             throw new NotAcceptableException()
         }
