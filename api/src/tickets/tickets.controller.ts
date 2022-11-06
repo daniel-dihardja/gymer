@@ -27,19 +27,18 @@ export class TicketsController {
     constructor(private creditsService: CreditsService,
                 private productService: VendorProductsService,
                 private ticketService: TicketsService,
-                private userService: UsersService) {
-    }
+                private userService: UsersService) {}
 
     @Post()
     @UseGuards(JwtAuthGuard)
-    async createTicket(@Body() createUserProductDTO: CreateTicketDTO, @Request() req): Promise<void> {
+    async createTicket(@Body() createTicketDTO: CreateTicketDTO, @Request() req): Promise<void> {
         const user = req.user;
         const credits = await this.creditsService.getUserCredits(user.id);
         if (!credits) {
             throw new NotAcceptableException();
         }
 
-        const productId = createUserProductDTO.productId;
+        const productId = createTicketDTO.productId;
         const product = await this.productService.getProduct(productId);
         if (!product) {
             throw new NotFoundException();
@@ -84,25 +83,28 @@ export class TicketsController {
     async validate(@Body() validateTicketDTO: ValidateTicketDTO, @Request() req): Promise<void> {
         const user = await this.userService.getVendorUserByEmail(req.user.username);
         if (!user) {
-            throw new UnauthorizedException()
+            throw new UnauthorizedException('User not found')
         }
 
         const ticket = await this.ticketService.getTicketWithProduct(validateTicketDTO.ticketId)
         if (!ticket) {
-            throw new NotFoundException()
+            throw new NotFoundException('Ticket not found')
         }
 
         const product = await this.productService.getProductWithVendor(ticket.product.id);
         if (!product) {
-            throw new NotFoundException()
+            throw new NotFoundException('Product not found')
         }
 
         if (user.vendor.id !== product.vendor.id) {
-            throw new NotAcceptableException()
+            throw new NotAcceptableException('Product is not from this vendor')
         }
 
         if (ticket.status !== 0) {
-            throw new NotAcceptableException()
+            throw new NotAcceptableException('Ticket is already closed')
         }
+
+        ticket.status = 1;
+        await this.ticketService.updateTicket(ticket);
     }
 }

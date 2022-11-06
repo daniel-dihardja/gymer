@@ -23,4 +23,8 @@ export class TicketsService {
             { where: { id: id }, relations: ['product'] }
         )
     }
+
+    async updateTicket(ticket: Ticket): Promise<Ticket> {
+        return this.ticketsRepository.save(ticket);
+    }
 }
