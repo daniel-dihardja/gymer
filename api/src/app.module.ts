@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -13,6 +14,7 @@ import { VendorProduct } from "./vendor-products/vendor-product.entity";
 import { VendorProductsModule } from './vendor-products/vendor-products.module';
 import { Vendor } from "./vendors/vendors.entity";
 import { VendorsModule } from './vendors/vendors.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
     imports: [UsersModule, TypeOrmModule.forRoot({
@@ -32,10 +34,12 @@ import { VendorsModule } from './vendors/vendors.module';
         VendorProductsModule,
         TicketsModule,
         CreditsModule,
+        MailModule,
+        ConfigModule.forRoot()
     ],
     controllers: [AppController],
     providers: [AppService],
-    exports: [UsersModule, VendorProductsModule]
+    exports: [UsersModule, VendorProductsModule, MailModule]
 })
 export class AppModule {
 }

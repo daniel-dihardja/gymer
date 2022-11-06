@@ -15,6 +15,7 @@ import { LocalAuthGuard } from "./auth/local-auth.guard";
 import { Roles } from "./auth/role.decorator";
 import { Role } from "./auth/role.enum";
 import { RolesGuard } from "./auth/role.guard";
+import { IMessage, MailService } from "./mail/mail.service";
 import { CreateUserDTO } from "./users/dto/create-user.dto";
 import { NewPasswordDTO } from "./users/dto/new-password.dto";
 import { RecoveryDTO } from "./users/dto/recovery.dto";
@@ -23,7 +24,8 @@ import { UsersService } from "./users/users.service";
 @Controller()
 export class AppController {
     constructor(private authService: AuthService,
-                private userService: UsersService) {
+                private userService: UsersService,
+                private mailService: MailService) {
     }
 
     @Post('users')
@@ -31,6 +33,17 @@ export class AppController {
         const token = await this.authService.createActivationToken(createUserDTO)
         const user = { ...createUserDTO, activationToken: token };
         await this.userService.createUser(user);
+        const activationLink = `http://localhost:3000/users/activate?token=${token}`;
+        const msg = this.getActivationMessage(createUserDTO, activationLink);
+        await this.mailService.sendMail(msg);
+    }
+
+    private getActivationMessage(user: CreateUserDTO, link: string): IMessage {
+        return {
+            to: user.email,
+            subject: 'Activation Link',
+            text: link
+        }
     }
 
     @Get('users/activate')
@@ -66,6 +79,16 @@ export class AppController {
         }
         user.recoveryCode = Math.round(Math.random() * 999999);
         await this.userService.updateUser(user);
+        // const msg = this.getRecoveryMessage(recoveryDto.email, user.recoveryCode)
+        // await this.mailService.sendMail(msg);
+    }
+
+    private getRecoveryMessage(email: string, code: number): IMessage {
+        return {
+            to: email,
+            subject: 'Recovery Code',
+            text: code.toString()
+        }
     }
 
     @Post('password')
@@ -86,5 +109,5 @@ export class AppController {
     @Get('ping')
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(Role.Vendor, Role.User)
-    async pingVendor(@Request() req): Promise<void> {}
+    async ping(@Request() req): Promise<void> {}
 }
