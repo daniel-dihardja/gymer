@@ -1,0 +1,18 @@
+branch-defaults:
+  default:
+    environment: api-server-dev
+    group_suffix: null
+global:
+  application_name: api-server
+  branch: null
+  default_ec2_keyname: null
+  default_platform: Docker running on 64bit Amazon Linux 2
+  default_region: eu-central-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: deploy-eb
+  repository: null
+  sc: null
+  workspace_type: Application
