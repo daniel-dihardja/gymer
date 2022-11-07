@@ -1,5 +1,5 @@
 # Gymer
-A ticketing system based for a network of gyms in a local area.
+A ticketing system for a network of gyms in a local area.
 
 Tech Stack:
 - Angular/Ionic
